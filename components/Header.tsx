@@ -1,36 +1,32 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
-interface HeaderProps {
-  currentTime: Date;
-}
+export default function Header() {
+  const [time, setTime] = useState('');
+  const [greeting, setGreeting] = useState('');
 
-export const Header: React.FC<HeaderProps> = ({ currentTime }) => {
-  const hour = currentTime.getHours();
-  let greeting = 'Good evening';
-  if (hour < 12) {
-    greeting = 'Good morning';
-  } else if (hour < 18) {
-    greeting = 'Good afternoon';
-  }
+  useEffect(() => {
+    const updateTime = () => {
+      const now = new Date();
+      const hour = now.getHours();
+      const timeStr = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+      const dateStr = now.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
+      
+      setTime(`${timeStr} — ${dateStr}`);
+      
+      if (hour < 12) setGreeting('Good morning');
+      else if (hour < 17) setGreeting('Good afternoon');
+      else setGreeting('Good evening');
+    };
 
-  const dateString = currentTime.toLocaleDateString('en-US', {
-    weekday: 'long',
-    month: 'long',
-    day: 'numeric',
-  });
-
-  const timeString = currentTime.toLocaleTimeString('en-US', {
-    hour: '2-digit',
-    minute: '2-digit',
-  });
+    updateTime();
+    const interval = setInterval(updateTime, 1000);
+    return () => clearInterval(interval);
+  }, []);
 
   return (
-    <div className="text-center md:text-left">
-      <h1 className="text-4xl md:text-5xl font-bold text-base-content mb-2">
-        {greeting}
-      </h1>
-      <p className="text-lg text-base-content/70 mb-1">{dateString}</p>
-      <p className="text-2xl font-light text-primary">{timeString}</p>
-    </div>
+    <header style={{ padding: '2rem 1.5rem', borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
+      <h1 style={{ fontSize: '2rem', fontWeight: '300', marginBottom: '0.5rem' }}>{greeting}</h1>
+      <p style={{ fontSize: '0.95rem', opacity: 0.6 }}>{time}</p>
+    </header>
   );
-};
+}

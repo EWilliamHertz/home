@@ -1,0 +1,54 @@
+.container {
+  min-height: 100vh;
+  background: #0f0f0f;
+}
+
+.main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+}
+
+.sectionTitle {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  opacity: 0.8;
+}
+
+.projects {
+  margin-bottom: 3rem;
+}
+
+.tools {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-bottom: 3rem;
+}
+
+.toolColumn {
+  min-width: 0;
+}
+
+.commands {
+  margin-bottom: 2rem;
+}
+
+@media (max-width: 768px) {
+  .main {
+    padding: 1.5rem 1rem;
+  }
+
+  .sectionTitle {
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+  }
+
+  .tools {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+}

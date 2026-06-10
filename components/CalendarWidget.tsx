@@ -1,120 +1,63 @@
 import React, { useState } from 'react';
-import { ChevronLeft, ChevronRight, Calendar } from 'lucide-react';
 
-export const CalendarWidget: React.FC = () => {
-  const [date, setDate] = useState(new Date());
+export default function CalendarWidget() {
+  const [currentDate, setCurrentDate] = useState(new Date());
 
-  const getDaysInMonth = (d: Date) => {
-    return new Date(d.getFullYear(), d.getMonth() + 1, 0).getDate();
+  const getDaysInMonth = (date) => {
+    return new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
   };
 
-  const getFirstDayOfMonth = (d: Date) => {
-    return new Date(d.getFullYear(), d.getMonth(), 1).getDay();
+  const getFirstDayOfMonth = (date) => {
+    return new Date(date.getFullYear(), date.getMonth(), 1).getDay();
   };
 
-  const daysInMonth = getDaysInMonth(date);
-  const firstDay = getFirstDayOfMonth(date);
+  const handlePrevMonth = () => {
+    setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() - 1));
+  };
+
+  const handleNextMonth = () => {
+    setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() + 1));
+  };
+
+  const daysInMonth = getDaysInMonth(currentDate);
+  const firstDay = getFirstDayOfMonth(currentDate);
+  const today = new Date();
+  const isCurrentMonth = currentDate.getMonth() === today.getMonth() && currentDate.getFullYear() === today.getFullYear();
+
   const days = [];
-
   for (let i = 0; i < firstDay; i++) {
     days.push(null);
   }
-
   for (let i = 1; i <= daysInMonth; i++) {
     days.push(i);
   }
 
-  const prevMonth = () => {
-    setDate(new Date(date.getFullYear(), date.getMonth() - 1));
-  };
-
-  const nextMonth = () => {
-    setDate(new Date(date.getFullYear(), date.getMonth() + 1));
-  };
-
-  const today = new Date();
-  const isCurrentMonth =
-    date.getFullYear() === today.getFullYear() &&
-    date.getMonth() === today.getMonth();
-
-  const monthName = date.toLocaleDateString('en-US', {
-    month: 'long',
-    year: 'numeric',
-  });
-
   return (
-    <div className="card bg-base-200 shadow-lg">
-      <div className="card-body">
-        <div className="flex items-center gap-2 mb-4">
-          <Calendar className="text-primary" size={24} />
-          <h3 className="card-title text-xl">Calendar</h3>
-        </div>
-
-        {/* Month navigation */}
-        <div className="flex items-center justify-between mb-4">
-          <button
-            onClick={prevMonth}
-            className="btn btn-ghost btn-sm btn-circle"
-            aria-label="Previous month"
+    <div style={{ padding: '1rem', background: 'rgba(255,255,255,0.05)', borderRadius: '0.75rem' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
+        <button onClick={handlePrevMonth} style={{ background: 'none', border: 'none', color: 'white', cursor: 'pointer', fontSize: '1.2rem' }}>←</button>
+        <h3 style={{ margin: 0 }}>{currentDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}</h3>
+        <button onClick={handleNextMonth} style={{ background: 'none', border: 'none', color: 'white', cursor: 'pointer', fontSize: '1.2rem' }}>→</button>
+      </div>
+      
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', gap: '0.25rem', textAlign: 'center', fontSize: '0.85rem' }}>
+        {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(day => (
+          <div key={day} style={{ fontWeight: '600', opacity: 0.6, padding: '0.5rem' }}>{day}</div>
+        ))}
+        {days.map((day, idx) => (
+          <div
+            key={idx}
+            style={{
+              padding: '0.5rem',
+              background: day && isCurrentMonth && day === today.getDate() ? '#10b981' : 'transparent',
+              borderRadius: '0.25rem',
+              opacity: day ? 1 : 0.3,
+            }}
           >
-            <ChevronLeft size={20} />
-          </button>
-          <h4 className="text-lg font-semibold text-center flex-1">
-            {monthName}
-          </h4>
-          <button
-            onClick={nextMonth}
-            className="btn btn-ghost btn-sm btn-circle"
-            aria-label="Next month"
-          >
-            <ChevronRight size={20} />
-          </button>
-        </div>
-
-        {/* Weekday headers */}
-        <div className="grid grid-cols-7 gap-1 mb-2">
-          {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((day) => (
-            <div
-              key={day}
-              className="text-center text-sm font-semibold text-base-content/60 py-2"
-            >
-              {day}
-            </div>
-          ))}
-        </div>
-
-        {/* Calendar days */}
-        <div className="grid grid-cols-7 gap-1">
-          {days.map((day, idx) => {
-            const isToday = isCurrentMonth && day === today.getDate();
-            return (
-              <div
-                key={idx}
-                className={`
-                  aspect-square rounded-lg flex items-center justify-center text-sm font-medium
-                  ${day === null ? '' : 'hover:bg-base-300 transition-colors'}
-                  ${
-                    isToday
-                      ? 'bg-primary text-primary-content font-bold'
-                      : 'text-base-content'
-                  }
-                `}
-              >
-                {day}
-              </div>
-            );
-          })}
-        </div>
-
-        {/* Today indicator */}
-        {isCurrentMonth && (
-          <div className="mt-4 p-3 bg-base-300 rounded-lg text-center">
-            <p className="text-sm text-base-content">
-              Today: <span className="font-semibold">{today.getDate()}</span>
-            </p>
+            {day}
           </div>
-        )}
+        ))}
       </div>
     </div>
   );
-};
+}

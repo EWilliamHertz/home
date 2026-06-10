@@ -1,48 +1,49 @@
 import React, { useState } from 'react';
-import { Copy, Check } from 'lucide-react';
 
-interface CommandCardProps {
-  title: string;
-  command: string;
-}
-
-export const CommandCard: React.FC<CommandCardProps> = ({ title, command }) => {
+export default function CommandCard() {
   const [copied, setCopied] = useState(false);
+  const command = 'cd chicago-tracker && npm run dev -- --host';
 
-  const handleCopy = async () => {
-    try {
-      await navigator.clipboard.writeText(command);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    } catch (err) {
-      console.error('Failed to copy:', err);
-    }
+  const handleCopy = () => {
+    navigator.clipboard.writeText(command);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
   };
 
   return (
-    <div className="card bg-gradient-to-br from-accent/10 to-accent/5 border border-accent/20">
-      <div className="card-body">
-        <h3 className="card-title text-lg mb-3 text-accent flex items-center gap-2">
-          🚀 {title}
-        </h3>
-        <div className="bg-base-300 rounded-lg p-3 font-mono text-sm text-base-content mb-3 break-all">
+    <div style={{ padding: '1.5rem', background: 'rgba(255,255,255,0.05)', borderRadius: '0.75rem', border: '1px solid rgba(255,255,255,0.1)' }}>
+      <h3 style={{ margin: '0 0 1rem 0', fontSize: '1rem' }}>🚀 Track Your Chicago League</h3>
+      <div style={{ display: 'flex', gap: '0.75rem' }}>
+        <code style={{
+          flex: 1,
+          background: 'rgba(0,0,0,0.3)',
+          padding: '0.75rem',
+          borderRadius: '0.5rem',
+          fontSize: '0.9rem',
+          overflow: 'auto',
+          color: '#10b981'
+        }}>
           {command}
-        </div>
+        </code>
         <button
           onClick={handleCopy}
-          className="btn btn-sm btn-secondary gap-2 w-full"
+          style={{
+            padding: '0.75rem 1rem',
+            background: '#10b981',
+            color: 'white',
+            border: 'none',
+            borderRadius: '0.5rem',
+            cursor: 'pointer',
+            fontSize: '0.9rem',
+            fontWeight: '600',
+            transition: 'all 0.2s'
+          }}
+          onMouseEnter={(e) => e.currentTarget.style.background = '#059669'}
+          onMouseLeave={(e) => e.currentTarget.style.background = '#10b981'}
         >
-          {copied ? (
-            <>
-              <Check size={16} /> Copied!
-            </>
-          ) : (
-            <>
-              <Copy size={16} /> Copy Command
-            </>
-          )}
+          {copied ? '✓ Copied' : 'Copy'}
         </button>
       </div>
     </div>
   );
-};
+}
