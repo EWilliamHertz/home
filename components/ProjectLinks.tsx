@@ -7,9 +7,9 @@ export const ProjectLinks: React.FC = () => {
     <div className="space-y-4">
       <h2 className="text-xl font-semibold text-base-content mb-4">Projects</h2>
       
-      {/* Home App */}
+      {/* XeoTrack */}
       <a
-        href="https://home-hazel-delta.vercel.app/"
+        href="https://xeotrack.vercel.app/"
         target="_blank"
         rel="noopener noreferrer"
         className="block card bg-gradient-to-br from-primary/10 to-primary/5 border border-primary/20 hover:border-primary/50 transition-all hover:shadow-lg hover:shadow-primary/20 cursor-pointer"
@@ -19,22 +19,49 @@ export const ProjectLinks: React.FC = () => {
             <div>
               <div className="flex items-center gap-2 mb-2">
                 <TrendingUp className="text-primary" size={24} />
+                <h3 className="card-title text-xl">XeoTrack</h3>
+              </div>
+              <p className="text-base-content/70 text-sm mb-3">
+                Financial planner & tracker
+              </p>
+            </div>
+            <ExternalLink className="text-primary/60" size={20} />
+          </div>
+          <div className="flex gap-2">
+            <span className="badge badge-primary badge-sm">Finance</span>
+            <span className="badge badge-primary badge-outline badge-sm">Live</span>
+          </div>
+        </div>
+      </a>
+
+      {/* Home App */}
+      <a
+        href="https://home-hazel-delta.vercel.app/"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="block card bg-gradient-to-br from-accent/10 to-accent/5 border border-accent/20 hover:border-accent/50 transition-all hover:shadow-lg hover:shadow-accent/20 cursor-pointer"
+      >
+        <div className="card-body">
+          <div className="flex items-start justify-between">
+            <div>
+              <div className="flex items-center gap-2 mb-2">
+                <TrendingUp className="text-accent" size={24} />
                 <h3 className="card-title text-xl">Home App</h3>
               </div>
               <p className="text-base-content/70 text-sm mb-3">
                 Personal dashboard & tools
               </p>
             </div>
-            <ExternalLink className="text-primary/60" size={20} />
+            <ExternalLink className="text-accent/60" size={20} />
           </div>
           <div className="flex gap-2">
-            <span className="badge badge-primary badge-sm">Dashboard</span>
-            <span className="badge badge-primary badge-outline badge-sm">Live</span>
+            <span className="badge badge-accent badge-sm">Dashboard</span>
+            <span className="badge badge-accent badge-outline badge-sm">Live</span>
           </div>
         </div>
       </a>
 
-      {/* GitHub */}
+      {/* GitHub Home Repo */}
       <a
         href="https://github.com/EWilliamHertz/home"
         target="_blank"
