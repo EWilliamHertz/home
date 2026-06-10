@@ -7,9 +7,9 @@ export const ProjectLinks: React.FC = () => {
     <div className="space-y-4">
       <h2 className="text-xl font-semibold text-base-content mb-4">Projects</h2>
       
-      {/* XeoTrack */}
+      {/* Home App */}
       <a
-        href="https://xeotrack.vercel.app/"
+        href="https://home-hazel-delta.vercel.app/"
         target="_blank"
         rel="noopener noreferrer"
         className="block card bg-gradient-to-br from-primary/10 to-primary/5 border border-primary/20 hover:border-primary/50 transition-all hover:shadow-lg hover:shadow-primary/20 cursor-pointer"
@@ -19,16 +19,16 @@ export const ProjectLinks: React.FC = () => {
             <div>
               <div className="flex items-center gap-2 mb-2">
                 <TrendingUp className="text-primary" size={24} />
-                <h3 className="card-title text-xl">XeoTrack</h3>
+                <h3 className="card-title text-xl">Home App</h3>
               </div>
               <p className="text-base-content/70 text-sm mb-3">
-                Financial planner & tracker
+                Personal dashboard & tools
               </p>
             </div>
             <ExternalLink className="text-primary/60" size={20} />
           </div>
           <div className="flex gap-2">
-            <span className="badge badge-primary badge-sm">Finance</span>
+            <span className="badge badge-primary badge-sm">Dashboard</span>
             <span className="badge badge-primary badge-outline badge-sm">Live</span>
           </div>
         </div>
@@ -36,7 +36,7 @@ export const ProjectLinks: React.FC = () => {
 
       {/* GitHub */}
       <a
-        href="https://github.com/ewilliamhertz/xeotrack"
+        href="https://github.com/EWilliamHertz/home"
         target="_blank"
         rel="noopener noreferrer"
         className="block card bg-gradient-to-br from-secondary/10 to-secondary/5 border border-secondary/20 hover:border-secondary/50 transition-all hover:shadow-lg hover:shadow-secondary/20 cursor-pointer"
@@ -49,7 +49,7 @@ export const ProjectLinks: React.FC = () => {
                 <h3 className="card-title text-xl">GitHub</h3>
               </div>
               <p className="text-base-content/70 text-sm mb-3">
-                XeoTrack source code
+                Home app source code
               </p>
             </div>
             <ExternalLink className="text-secondary/60" size={20} />
