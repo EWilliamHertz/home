@@ -1,17 +1,18 @@
 import type { AppProps } from 'next/app';
 import { SessionProvider } from 'next-auth/react';
-import { useEffect } from 'react';
-import { initializeDb } from '../lib/db';
-import '../styles/globals.css';
+import { useEffect, useState } from 'react';
+import './globals.css';
 
-export default function App({
-  Component,
-  pageProps: { session, ...pageProps },
-}: AppProps) {
+export default function App({ Component, pageProps: { session, ...pageProps } }: AppProps) {
+  const [mounted, setMounted] = useState(false);
+
   useEffect(() => {
-    // Initialize database tables on app load
-    initializeDb().catch(console.error);
+    setMounted(true);
+    // Initialize database on first load
+    fetch('/api/init-db').catch(console.error);
   }, []);
+
+  if (!mounted) return null;
 
   return (
     <SessionProvider session={session}>
