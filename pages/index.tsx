@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useSession, signIn, signOut } from 'next-auth/react';
+import { useSession, signIn } from 'next-auth/react';
 import Header from '../components/Header';
 import ProjectLinks from '../components/ProjectLinks';
 import CalendarWidget from '../components/CalendarWidget';
@@ -8,15 +8,29 @@ import CommandCard from '../components/CommandCard';
 import SettingsPanel from '../components/SettingsPanel';
 import styles from '../styles/Home.module.css';
 
+interface PanelConfig {
+  id: string;
+  name: string;
+  visible: boolean;
+}
+
+const PANEL_COMPONENTS: { [key: string]: React.ComponentType<any> } = {
+  header: Header,
+  projectlinks: ProjectLinks,
+  calendar: CalendarWidget,
+  quicklinks: QuickLinks,
+  commandcard: CommandCard,
+};
+
 export default function Home() {
   const { data: session } = useSession();
   const [showSettings, setShowSettings] = useState(false);
-  const [panels, setPanels] = useState([
-    { id: 'header', name: 'Header', visible: true, component: Header },
-    { id: 'projectlinks', name: 'Project Links', visible: true, component: ProjectLinks },
-    { id: 'calendar', name: 'Calendar', visible: true, component: CalendarWidget },
-    { id: 'quicklinks', name: 'Quick Links', visible: true, component: QuickLinks },
-    { id: 'commandcard', name: 'Command Card', visible: true, component: CommandCard },
+  const [panels, setPanels] = useState<PanelConfig[]>([
+    { id: 'header', name: 'Header', visible: true },
+    { id: 'projectlinks', name: 'Project Links', visible: true },
+    { id: 'calendar', name: 'Calendar', visible: true },
+    { id: 'quicklinks', name: 'Quick Links', visible: true },
+    { id: 'commandcard', name: 'Command Card', visible: true },
   ]);
 
   useEffect(() => {
@@ -42,7 +56,7 @@ export default function Home() {
     }
   };
 
-  const handleSettingsSave = async (updatedPanels: any[]) => {
+  const handleSettingsSave = async (updatedPanels: PanelConfig[]) => {
     try {
       await fetch('/api/settings', {
         method: 'POST',
@@ -69,11 +83,14 @@ export default function Home() {
       )}
 
       <div className={styles.content}>
-        {panels.filter((p) => p.visible).map((panel) => (
-          <div key={panel.id} className={styles.panel}>
-            <panel.component />
-          </div>
-        ))}
+        {panels.filter((p) => p.visible).map((panel) => {
+          const Component = PANEL_COMPONENTS[panel.id];
+          return (
+            <div key={panel.id} className={styles.panel}>
+              {Component && <Component />}
+            </div>
+          );
+        })}
       </div>
 
       {!session && (
