@@ -1,7 +1,7 @@
 import type { AppProps } from 'next/app';
 import { SessionProvider } from 'next-auth/react';
 import { useEffect, useState } from 'react';
-import './globals.css';
+import '../styles/globals.css';
 
 export default function App({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   const [mounted, setMounted] = useState(false);
