@@ -1,63 +1,47 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'
 
 export default function CalendarWidget() {
-  const [currentDate, setCurrentDate] = useState(new Date());
+  const [currentMonth, setCurrentMonth] = useState(new Date())
 
-  const getDaysInMonth = (date) => {
-    return new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
-  };
+  const getDaysInMonth = (date: Date) => {
+    return new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate()
+  }
 
-  const getFirstDayOfMonth = (date) => {
-    return new Date(date.getFullYear(), date.getMonth(), 1).getDay();
-  };
+  const getFirstDayOfMonth = (date: Date) => {
+    return new Date(date.getFullYear(), date.getMonth(), 1).getDay()
+  }
+
+  const daysInMonth = getDaysInMonth(currentMonth)
+  const firstDay = getFirstDayOfMonth(currentMonth)
+  const monthName = currentMonth.toLocaleString('default', { month: 'long', year: 'numeric' })
+
+  const days = Array(firstDay).fill(null).concat(Array.from({ length: daysInMonth }, (_, i) => i + 1))
 
   const handlePrevMonth = () => {
-    setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() - 1));
-  };
+    setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() - 1))
+  }
 
   const handleNextMonth = () => {
-    setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() + 1));
-  };
-
-  const daysInMonth = getDaysInMonth(currentDate);
-  const firstDay = getFirstDayOfMonth(currentDate);
-  const today = new Date();
-  const isCurrentMonth = currentDate.getMonth() === today.getMonth() && currentDate.getFullYear() === today.getFullYear();
-
-  const days = [];
-  for (let i = 0; i < firstDay; i++) {
-    days.push(null);
-  }
-  for (let i = 1; i <= daysInMonth; i++) {
-    days.push(i);
+    setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1))
   }
 
   return (
-    <div style={{ padding: '1rem', background: 'rgba(255,255,255,0.05)', borderRadius: '0.75rem' }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
-        <button onClick={handlePrevMonth} style={{ background: 'none', border: 'none', color: 'white', cursor: 'pointer', fontSize: '1.2rem' }}>←</button>
-        <h3 style={{ margin: 0 }}>{currentDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}</h3>
-        <button onClick={handleNextMonth} style={{ background: 'none', border: 'none', color: 'white', cursor: 'pointer', fontSize: '1.2rem' }}>→</button>
+    <div className="calendar-widget">
+      <div className="calendar-header">
+        <button onClick={handlePrevMonth}>←</button>
+        <h3>{monthName}</h3>
+        <button onClick={handleNextMonth}>→</button>
       </div>
-      
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', gap: '0.25rem', textAlign: 'center', fontSize: '0.85rem' }}>
-        {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(day => (
-          <div key={day} style={{ fontWeight: '600', opacity: 0.6, padding: '0.5rem' }}>{day}</div>
+      <div className="calendar-grid">
+        {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((day) => (
+          <div key={day} className="calendar-day-header">{day}</div>
         ))}
-        {days.map((day, idx) => (
-          <div
-            key={idx}
-            style={{
-              padding: '0.5rem',
-              background: day && isCurrentMonth && day === today.getDate() ? '#10b981' : 'transparent',
-              borderRadius: '0.25rem',
-              opacity: day ? 1 : 0.3,
-            }}
-          >
+        {days.map((day, index) => (
+          <div key={index} className={`calendar-day ${day ? 'active' : ''}`}>
             {day}
           </div>
         ))}
       </div>
     </div>
-  );
+  )
 }
