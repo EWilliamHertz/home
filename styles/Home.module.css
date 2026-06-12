@@ -1,54 +1,35 @@
 .container {
   min-height: 100vh;
-  background: #0f0f0f;
+  display: flex;
+  flex-direction: column;
 }
 
-.main {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 2rem 1.5rem;
-}
-
-.sectionTitle {
-  font-size: 1.5rem;
-  font-weight: 600;
-  margin-bottom: 1.5rem;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  opacity: 0.8;
-}
-
-.projects {
-  margin-bottom: 3rem;
-}
-
-.tools {
+.content {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 2rem;
-  margin-bottom: 3rem;
+  gap: 20px;
 }
 
-.toolColumn {
-  min-width: 0;
+.panel {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.commands {
-  margin-bottom: 2rem;
+.auth {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
 }
 
-@media (max-width: 768px) {
-  .main {
-    padding: 1.5rem 1rem;
-  }
-
-  .sectionTitle {
-    font-size: 1.25rem;
-    margin-bottom: 1rem;
-  }
-
-  .tools {
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
-  }
+.auth button {
+  background: #667eea;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 600;
 }

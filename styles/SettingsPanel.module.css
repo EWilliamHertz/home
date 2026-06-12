@@ -1,0 +1,94 @@
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.panel {
+  background: white;
+  border-radius: 12px;
+  padding: 24px;
+  max-width: 400px;
+  width: 90%;
+  max-height: 80vh;
+  overflow-y: auto;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+}
+
+.panel h2 {
+  margin-bottom: 20px;
+}
+
+.itemsList {
+  margin-bottom: 20px;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  background: #f8f9ff;
+  border-radius: 8px;
+  margin-bottom: 8px;
+  cursor: move;
+  border: 2px solid transparent;
+  transition: border 0.2s;
+}
+
+.item:hover {
+  border-color: #667eea;
+}
+
+.dragHandle {
+  color: #667eea;
+  font-weight: 600;
+  cursor: grab;
+}
+
+.item span:nth-child(2) {
+  flex: 1;
+  font-weight: 500;
+}
+
+.toggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.toggle input {
+  cursor: pointer;
+}
+
+.actions {
+  display: flex;
+  gap: 12px;
+}
+
+.saveBtn {
+  flex: 1;
+  background: #667eea;
+  color: white;
+  padding: 10px;
+  border-radius: 6px;
+  font-weight: 600;
+}
+
+.closeBtn {
+  flex: 1;
+  background: #f0f0f0;
+  color: #333;
+  padding: 10px;
+  border-radius: 6px;
+  font-weight: 600;
+}

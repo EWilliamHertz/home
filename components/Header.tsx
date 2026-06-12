@@ -1,31 +1,33 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react';
+import { useSession } from 'next-auth/react';
+import styles from '../styles/Header.module.css';
 
-export default function Header() {
-  const [time, setTime] = useState('')
-  const [greeting, setGreeting] = useState('')
+interface HeaderProps {
+  onSettingsClick?: () => void;
+}
+
+export default function Header({ onSettingsClick }: HeaderProps) {
+  const { data: session } = useSession();
+  const [time, setTime] = useState('');
 
   useEffect(() => {
     const updateTime = () => {
-      const now = new Date()
-      setTime(now.toLocaleTimeString('en-US', { hour12: true }))
-      
-      const hour = now.getHours()
-      if (hour < 12) setGreeting('Good Morning')
-      else if (hour < 18) setGreeting('Good Afternoon')
-      else setGreeting('Good Evening')
-    }
-
-    updateTime()
-    const interval = setInterval(updateTime, 1000)
-    return () => clearInterval(interval)
-  }, [])
+      setTime(new Date().toLocaleTimeString());
+    };
+    updateTime();
+    const interval = setInterval(updateTime, 1000);
+    return () => clearInterval(interval);
+  }, []);
 
   return (
-    <header className="header">
-      <div className="header-content">
-        <h1>{greeting}, Ernst-William</h1>
-        <div className="clock">{time}</div>
+    <header className={styles.header}>
+      <div className={styles.left}>
+        <h1>Welcome, {session?.user?.name || 'Guest'}</h1>
+        <p className={styles.time}>{time}</p>
       </div>
+      <button className={styles.settingsBtn} onClick={onSettingsClick}>
+        ⚙️
+      </button>
     </header>
-  )
+  );
 }

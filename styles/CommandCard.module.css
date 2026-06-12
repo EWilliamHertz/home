@@ -1,0 +1,36 @@
+.card {
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.card h2 {
+  margin-bottom: 16px;
+}
+
+.commandBox {
+  background: #1e1e1e;
+  color: #00ff00;
+  padding: 12px;
+  border-radius: 6px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: monospace;
+  font-size: 12px;
+}
+
+.commandBox code {
+  flex: 1;
+}
+
+.commandBox button {
+  background: #667eea;
+  color: white;
+  padding: 6px 12px;
+  border-radius: 4px;
+  margin-left: 12px;
+  font-size: 12px;
+  white-space: nowrap;
+}

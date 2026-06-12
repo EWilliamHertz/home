@@ -1,25 +1,24 @@
-import React from 'react'
+import styles from '../styles/QuickLinks.module.css';
 
 export default function QuickLinks() {
   const links = [
-    { name: 'Gmail', url: 'https://mail.google.com/', icon: '📧' },
-    { name: 'Google', url: 'https://google.com/', icon: '🔍' },
-    { name: 'Google Docs', url: 'https://docs.google.com/', icon: '📄' },
-    { name: 'Titan Mail', url: 'https://titan.email/', icon: '📨' },
-    { name: 'Cloud Shell IDE', url: 'https://console.cloud.google.com/cloudshell', icon: '💻' },
-  ]
+    { icon: '📧', name: 'Gmail', url: 'https://mail.google.com' },
+    { icon: '🔍', name: 'Google', url: 'https://google.com' },
+    { icon: '📄', name: 'Google Docs', url: 'https://docs.google.com' },
+    { icon: '☁️', name: 'Cloud Shell', url: 'https://shell.cloud.google.com' },
+  ];
 
   return (
-    <section className="quick-links">
+    <div className={styles.card}>
       <h2>Quick Links</h2>
-      <div className="links-grid">
+      <div className={styles.links}>
         {links.map((link) => (
-          <a key={link.name} href={link.url} target="_blank" rel="noopener noreferrer" className="quick-link">
-            <span className="icon">{link.icon}</span>
-            <span className="name">{link.name}</span>
+          <a key={link.name} href={link.url} target="_blank" rel="noopener noreferrer" className={styles.link}>
+            <span className={styles.icon}>{link.icon}</span>
+            <span>{link.name}</span>
           </a>
         ))}
       </div>
-    </section>
-  )
+    </div>
+  );
 }

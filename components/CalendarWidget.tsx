@@ -1,47 +1,35 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
+import styles from '../styles/Calendar.module.css';
 
 export default function CalendarWidget() {
-  const [currentMonth, setCurrentMonth] = useState(new Date())
+  const [currentDate, setCurrentDate] = useState(new Date());
 
-  const getDaysInMonth = (date: Date) => {
-    return new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate()
+  const daysInMonth = (date: Date) => new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
+  const firstDay = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1).getDay();
+
+  const days = [];
+  for (let i = 0; i < firstDay; i++) {
+    days.push(null);
   }
-
-  const getFirstDayOfMonth = (date: Date) => {
-    return new Date(date.getFullYear(), date.getMonth(), 1).getDay()
-  }
-
-  const daysInMonth = getDaysInMonth(currentMonth)
-  const firstDay = getFirstDayOfMonth(currentMonth)
-  const monthName = currentMonth.toLocaleString('default', { month: 'long', year: 'numeric' })
-
-  const days = Array(firstDay).fill(null).concat(Array.from({ length: daysInMonth }, (_, i) => i + 1))
-
-  const handlePrevMonth = () => {
-    setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() - 1))
-  }
-
-  const handleNextMonth = () => {
-    setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1))
+  for (let i = 1; i <= daysInMonth(currentDate); i++) {
+    days.push(i);
   }
 
   return (
-    <div className="calendar-widget">
-      <div className="calendar-header">
-        <button onClick={handlePrevMonth}>←</button>
-        <h3>{monthName}</h3>
-        <button onClick={handleNextMonth}>→</button>
+    <div className={styles.card}>
+      <div className={styles.header}>
+        <button onClick={() => setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() - 1))}>←</button>
+        <h3>{currentDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}</h3>
+        <button onClick={() => setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() + 1))}>→</button>
       </div>
-      <div className="calendar-grid">
-        {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((day) => (
-          <div key={day} className="calendar-day-header">{day}</div>
+      <div className={styles.grid}>
+        {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((d) => (
+          <div key={d} className={styles.dayHeader}>{d}</div>
         ))}
-        {days.map((day, index) => (
-          <div key={index} className={`calendar-day ${day ? 'active' : ''}`}>
-            {day}
-          </div>
+        {days.map((day, i) => (
+          <div key={i} className={styles.day}>{day}</div>
         ))}
       </div>
     </div>
-  )
+  );
 }
